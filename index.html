@@ -346,8 +346,8 @@ header{position:sticky;top:env(safe-area-inset-top,0px);z-index:10;box-shadow:0 
 <div style="padding: 8px 0">Instagram: @laperegrina.ar</div>
 </div>
 </div>
-<form id="form-contacto" name="contacto" method="POST" data-netlify="true" netlify-honeypot="apodo" style="flex: 1 1 420px; background: #EDE6DF; color: #330323; border-radius: 20px; padding: 36px; display: flex; flex-direction: column; gap: 18px">
-<input type="hidden" name="form-name" value="contacto"><p hidden><label>No completar: <input name="apodo"></label></p>
+<form id="form-contacto" name="contacto" method="POST" style="flex: 1 1 420px; background: #EDE6DF; color: #330323; border-radius: 20px; padding: 36px; display: flex; flex-direction: column; gap: 18px">
+<p hidden><label>No completar: <input name="apodo"></label></p>
 <div style="display: flex; flex-direction: column; gap: 8px"><label for="i-nombre" style="font-size: 14px; font-weight: 700">Nombre</label><input id="i-nombre" name="nombre" type="text" required autocomplete="name" style="font: inherit; font-size: 16px; padding: 14px 16px; border: 1.5px solid #7A5C70; border-radius: 10px; color: #330323; background: #FFFFFF"></div>
 <div style="display: flex; flex-direction: column; gap: 8px"><label for="i-comercio" style="font-size: 14px; font-weight: 700">Comercio o distribuidora</label><input id="i-comercio" name="comercio" type="text" autocomplete="organization" style="font: inherit; font-size: 16px; padding: 14px 16px; border: 1.5px solid #7A5C70; border-radius: 10px; color: #330323; background: #FFFFFF"></div>
 <div style="display: flex; flex-direction: column; gap: 8px"><label for="i-ciudad" style="font-size: 14px; font-weight: 700">Ciudad</label><input id="i-ciudad" name="ciudad" type="text" style="font: inherit; font-size: 16px; padding: 14px 16px; border: 1.5px solid #7A5C70; border-radius: 10px; color: #330323; background: #FFFFFF"></div>
@@ -385,8 +385,8 @@ function say(m){est.textContent=m;est.hidden=false;}
 form.addEventListener('submit',function(e){e.preventDefault();
 if(!form.nombre.value.trim()||!form.contacto.value.trim()){say('Completá tu nombre y un teléfono o email para que podamos responderte.');return;}
 btn.disabled=true;say('Enviando…');
-fetch('/',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:new URLSearchParams(new FormData(form)).toString()})
-.then(function(r){if(!r.ok)throw new Error(r.status);form.reset();say('¡Gracias! Recibimos tus datos y te escribimos a la brevedad.');})
+fetch('https://script.google.com/macros/s/AKfycbzo6ld2wXtZf6H6Ex2drS_G362LpLj_oD19Lw6UvHPFQSGRJJ3MyboesNWGXTsc8Jub/exec',{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:new URLSearchParams(new FormData(form)).toString()})
+.then(function(){form.reset();say('¡Gracias! Recibimos tus datos y te escribimos a la brevedad.');})
 .catch(function(){say('No pudimos enviar el formulario. Escribinos a info@laperegrina.ar o por WhatsApp al +54 9 223 696-5902.');})
 .then(function(){btn.disabled=false;});});}
 var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;if(reduce)return;
