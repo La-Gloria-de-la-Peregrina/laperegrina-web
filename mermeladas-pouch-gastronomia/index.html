@@ -154,7 +154,7 @@ form.addEventListener('submit',function(e){e.preventDefault();
 if(!form.nombre.value.trim()||!form.contacto.value.trim()){say('Completá tu nombre y un teléfono o email para que podamos responderte.');return;}
 btn.disabled=true;say('Enviando…');
 fetch('https://script.google.com/macros/s/AKfycbzo6ld2wXtZf6H6Ex2drS_G362LpLj_oD19Lw6UvHPFQSGRJJ3MyboesNWGXTsc8Jub/exec',{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:new URLSearchParams(new FormData(form)).toString()})
-.then(function(){form.reset();say('¡Gracias! Recibimos tus datos y te escribimos a la brevedad.');})
+.then(function(){form.reset();if(window.gtag){gtag('event','generate_lead',{formulario:'contacto',pagina:location.pathname});}say('¡Gracias! Recibimos tus datos y te escribimos a la brevedad.');})
 .catch(function(){say('No pudimos enviar el formulario. Escribinos a info@laperegrina.ar o por WhatsApp al +54 9 223 696-5902.');})
 .then(function(){btn.disabled=false;});});}
 var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;if(reduce)return;
