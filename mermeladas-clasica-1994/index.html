@@ -46,7 +46,7 @@ header{position:sticky;top:env(safe-area-inset-top,0px);z-index:10;box-shadow:0 
 <nav aria-label="Principal" style="display: flex; flex-wrap: wrap; align-items: center; gap: 34px; font-size: 15px; font-weight: 600; letter-spacing: 0.04em">
 <a href="/mermeladas-clasica-1994/" aria-current="page" style="text-decoration: none; padding: 12px 0">Clásica 1994</a>
 <a href="/mermeladas-70-fruta/" style="text-decoration: none; padding: 12px 0">70% fruta</a>
-<a href="/mermelada-3-kg-gastronomia/" style="text-decoration: none; padding: 12px 0">Gastronomía</a>
+<a href="/mermeladas-pouch-gastronomia/" style="text-decoration: none; padding: 12px 0">Gastronomía</a>
 <a href="/nosotros/" style="text-decoration: none; padding: 12px 0">Nosotros</a>
 <a href="#contacto" style="text-decoration: none; background: #B80F36; color: #FFFFFF; padding: 13px 22px; border-radius: 999px; font-weight: 700">Quiero vender La Peregrina</a>
 </nav>
@@ -133,7 +133,7 @@ header{position:sticky;top:env(safe-area-inset-top,0px);z-index:10;box-shadow:0 
 <script>
 (function(){
 var current='clasica';
-if(current==='inicio'){var m={clasica:'/mermeladas-clasica-1994/',fruta70:'/mermeladas-70-fruta/',gastronomia:'/mermelada-3-kg-gastronomia/',nosotros:'/nosotros/'},h=(location.hash||'').slice(1);if(m[h]){location.replace(m[h]);return;}}
+if(current==='inicio'){var m={clasica:'/mermeladas-clasica-1994/',fruta70:'/mermeladas-70-fruta/',gastronomia:'/mermeladas-pouch-gastronomia/',nosotros:'/nosotros/'},h=(location.hash||'').slice(1);if(m[h]){location.replace(m[h]);return;}}
 var form=document.getElementById('form-contacto');if(form){var est=document.getElementById('form-estado'),btn=document.getElementById('form-enviar');
 function say(m){est.textContent=m;est.hidden=false;}
 form.addEventListener('submit',function(e){e.preventDefault();
