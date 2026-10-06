@@ -155,5 +155,11 @@ el.querySelector('[data-line]').textContent=on?'Clásica 1994':'Selección Espec
 setInterval(function(){if(current!=='inicio'||document.hidden)return;var t=tiles[order[step%4]],c=cards[cardOrder[step%5]];if(t)flip(t,false);if(c)flip(c,true);step++;},1800);
 })();
 </script>
+<a id="wa-flotante" href="https://wa.me/5492236965902?text=Hola%2C%20vi%20la%20web%20de%20La%20Peregrina%20y%20quiero%20recibir%20la%20lista%20de%20productos." target="_blank" rel="noopener" aria-label="Escribinos por WhatsApp" onclick="if(window.gtag){gtag('event','click_whatsapp',{pagina:location.pathname});}"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 11.5a8.4 8.4 0 0 1-12.3 7.4L3 20.5l1.7-5.4A8.4 8.4 0 1 1 21 11.5z"/></svg><span>Escribinos por WhatsApp</span></a>
+<style>
+#wa-flotante{position:fixed;right:22px;bottom:22px;z-index:50;display:flex;align-items:center;gap:10px;background:#1E9E50;color:#fff;text-decoration:none;font-family:Raleway,sans-serif;font-weight:700;font-size:16px;padding:14px 22px 14px 18px;border-radius:999px;box-shadow:0 8px 24px rgba(34,1,26,.28)}
+#wa-flotante:hover{background:#178443;color:#fff}
+@media (max-width:760px){#wa-flotante{right:14px;bottom:14px;padding:13px 18px 13px 15px;font-size:15px}#wa-flotante span{font-size:0}#wa-flotante span::after{content:"WhatsApp";font-size:15px}}
+</style>
 </body>
 </html>
