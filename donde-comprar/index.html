@@ -137,10 +137,10 @@ map.on('load',function(){
   var img=new Image(76,98);
   img.onload=function(){
     map.addImage('pin',img,{pixelRatio:2});
-    map.addSource('pv',{type:'geojson',cluster:true,clusterRadius:42,clusterMaxZoom:15,data:{type:'FeatureCollection',features:P.map(function(p,i){return{type:'Feature',properties:{i:i},geometry:{type:'Point',coordinates:[p.lng,p.lat]}};})}});
+    map.addSource('pv',{type:'geojson',data:{type:'FeatureCollection',features:P.map(function(p,i){return{type:'Feature',properties:{i:i},geometry:{type:'Point',coordinates:[p.lng,p.lat]}};})}});
     map.addLayer({id:'cl',type:'circle',source:'pv',filter:['has','point_count'],paint:{'circle-color':'#330323','circle-radius':['step',['get','point_count'],19,10,24],'circle-stroke-width':3,'circle-stroke-color':'#fff'}});
     map.addLayer({id:'cln',type:'symbol',source:'pv',filter:['has','point_count'],layout:{'text-field':['get','point_count_abbreviated'],'text-font':['Noto Sans Bold'],'text-size':15},paint:{'text-color':'#fff'}});
-    map.addLayer({id:'pt',type:'symbol',source:'pv',filter:['!',['has','point_count']],layout:{'icon-image':'pin','icon-anchor':'bottom','icon-allow-overlap':true}});
+    map.addLayer({id:'pt',type:'symbol',source:'pv',filter:['!',['has','point_count']],layout:{'icon-image':'pin','icon-anchor':'bottom','icon-allow-overlap':true,'icon-ignore-placement':true,'symbol-sort-key':['-',0,['get','i']],'icon-size':['interpolate',['linear'],['zoom'],10,0.8,14,1]}});
     map.on('click','cl',function(e){var f=e.features[0];map.getSource('pv').getClusterExpansionZoom(f.properties.cluster_id).then(function(z){map.easeTo({center:f.geometry.coordinates,zoom:z+0.5});});});
     map.on('click','pt',function(e){var f=e.features[0];pop(P[f.properties.i],f.geometry.coordinates);});
     ['cl','pt'].forEach(function(l){map.on('mouseenter',l,function(){map.getCanvas().style.cursor='pointer';});map.on('mouseleave',l,function(){map.getCanvas().style.cursor='';});});
