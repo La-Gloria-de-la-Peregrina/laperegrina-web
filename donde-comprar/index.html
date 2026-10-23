@@ -95,7 +95,7 @@ header nav a:last-child{margin-top:16px;text-align:center;border-bottom:0}
 <h1 style="margin: 0; font-family: Fraunces, serif; font-weight: 500; font-size: clamp(44px, 5.5vw, 76px); line-height: 1; letter-spacing: -0.02em">Dónde comprar.</h1>
 <p style="margin: 0; font-size: 19px; line-height: 1.55; max-width: 640px">Encontrá nuestras mermeladas y miel en almacenes, dietéticas y tiendas naturales. Tocá un punto del mapa para ver cómo llegar.</p>
 </div>
-<div class="dc-box"><div class="dc-mapwrap"><div class="dc-bar"><button class="dc-cerca" id="dc-cerca" type="button">📍 Ver los más cercanos</button><button class="dc-zona" type="button" data-zona="amba" aria-pressed="false">Buenos Aires</button><button class="dc-zona" type="button" data-zona="mdp" aria-pressed="false">Mar del Plata</button></div><div id="dc-mapa" role="region" aria-label="Mapa de puntos de venta"></div></div></div>
+<div class="dc-box"><div class="dc-mapwrap"><div class="dc-bar"><button class="dc-cerca" id="dc-cerca" type="button">📍 Ver los más cercanos</button><button class="dc-zona" type="button" data-zona="amba" aria-pressed="false">Buenos Aires</button><button class="dc-zona" type="button" data-zona="mdp" aria-pressed="true">Mar del Plata</button></div><div id="dc-mapa" role="region" aria-label="Mapa de puntos de venta"></div></div></div>
 </section>
 </main>
 
@@ -136,7 +136,7 @@ header nav a:last-child{margin-top:16px;text-align:center;border-bottom:0}
 <script>
 (function(){
 var P=window.PUNTOS||[];
-var map=new maplibregl.Map({container:'dc-mapa',style:'https://tiles.openfreemap.org/styles/positron',bounds:P.length?[[Math.min.apply(0,P.map(function(p){return p.lng;})),Math.min.apply(0,P.map(function(p){return p.lat;}))],[Math.max.apply(0,P.map(function(p){return p.lng;})),Math.max.apply(0,P.map(function(p){return p.lat;}))]]:[[-58.56,-34.65],[-58.35,-34.50]],fitBoundsOptions:{padding:50},cooperativeGestures:true,attributionControl:{compact:true},locale:{'CooperativeGesturesHandler.WindowsHelpText':'Usá Ctrl + rueda para hacer zoom','CooperativeGesturesHandler.MacHelpText':'Usá ⌘ + rueda para hacer zoom','CooperativeGesturesHandler.MobileHelpText':'Usá dos dedos para mover el mapa'}});
+var map=new maplibregl.Map({container:'dc-mapa',style:'https://tiles.openfreemap.org/styles/positron',bounds:[[-57.63,-38.10],[-57.52,-37.94]],fitBoundsOptions:{padding:50},cooperativeGestures:true,attributionControl:{compact:true},locale:{'CooperativeGesturesHandler.WindowsHelpText':'Usá Ctrl + rueda para hacer zoom','CooperativeGesturesHandler.MacHelpText':'Usá ⌘ + rueda para hacer zoom','CooperativeGesturesHandler.MobileHelpText':'Usá dos dedos para mover el mapa'}});
 map.addControl(new maplibregl.NavigationControl({showCompass:false}),'top-right');
 function esc(t){return String(t).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
 function km(v){return v.toFixed(1).replace('.',',')+' km';}
