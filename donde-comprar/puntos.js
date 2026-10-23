@@ -109,5 +109,7 @@ window.PUNTOS=[
 {"n": "Casa PIPA", "d": "", "lat": -34.911323, "lng": -57.961036},
 {"n": "Puro de Origen Dietética (Calle 50)", "d": "", "lat": -34.916918, "lng": -57.952143},
 {"n": "Sopresatta", "d": "", "lat": -34.903942, "lng": -57.959918},
-{"n": "Libra Tienda Natural", "d": "", "lat": -34.921737, "lng": -57.972317}
+{"n": "Libra Tienda Natural", "d": "", "lat": -34.921737, "lng": -57.972317},
+{"n": "Bombonería Nima", "d": "Peatonal Rivadavia 310, Quilmes", "lat": -34.720845, "lng": -58.255233},
+{"n": "Super Quilmes", "d": "Alvear 567, Quilmes", "lat": -34.720655, "lng": -58.255939}
 ];
