@@ -60,13 +60,16 @@ header nav a:last-child{margin-top:16px;text-align:center;border-bottom:0}
 .dc-box{max-width:1200px;margin:0 auto;padding:0 32px 96px}
 .dc-mapwrap{position:relative;isolation:isolate;z-index:0;border-radius:24px;overflow:hidden;box-shadow:0 10px 30px rgba(51,3,35,.12);background:#EDE6DF}
 #dc-mapa{height:680px}
-.dc-cerca{position:absolute;left:18px;top:18px;z-index:2;font:inherit;font-size:15px;font-weight:700;background:#330323;color:#fff;border:0;border-radius:999px;padding:12px 20px;cursor:pointer;box-shadow:0 6px 18px rgba(34,1,26,.3)}
+.dc-bar{position:absolute;left:18px;top:18px;right:60px;z-index:2;display:flex;flex-wrap:wrap;gap:8px}
+.dc-zona{font:inherit;font-size:15px;font-weight:700;background:#fff;color:#330323;border:0;border-radius:999px;padding:12px 18px;cursor:pointer;box-shadow:0 6px 18px rgba(34,1,26,.2)}
+.dc-zona[aria-pressed="true"]{background:#B80F36;color:#fff}
+.dc-cerca{font:inherit;font-size:15px;font-weight:700;background:#330323;color:#fff;border:0;border-radius:999px;padding:12px 20px;cursor:pointer;box-shadow:0 6px 18px rgba(34,1,26,.3)}
 .maplibregl-popup-content{border-radius:16px;padding:16px 18px;color:#330323;font-family:Raleway,sans-serif;box-shadow:0 10px 30px rgba(34,1,26,.25)}
 .maplibregl-popup-close-button{font-size:20px;padding:2px 8px;color:#7A5C70}
 .dc-pop b{display:block;font-family:Fraunces,serif;font-weight:600;font-size:19px;line-height:1.2;padding-right:14px}
 .dc-pop span{display:block;font-size:14px;color:#7A5C70;margin-top:4px}
 .dc-pop a{display:inline-block;margin-top:12px;background:#B80F36;color:#fff!important;text-decoration:none;font-weight:700;font-size:14px;padding:9px 16px;border-radius:999px}
-@media (max-width:760px){.dc-box{padding:0 16px 64px}#dc-mapa{height:70vh}.dc-mapwrap{border-radius:18px}}
+@media (max-width:760px){.dc-bar{left:12px;top:12px;gap:6px}.dc-cerca,.dc-zona{font-size:13px!important;padding:10px 14px!important}.dc-box{padding:0 16px 64px}#dc-mapa{height:70vh}.dc-mapwrap{border-radius:18px}}
 </style>
 </head>
 <body>
@@ -92,7 +95,7 @@ header nav a:last-child{margin-top:16px;text-align:center;border-bottom:0}
 <h1 style="margin: 0; font-family: Fraunces, serif; font-weight: 500; font-size: clamp(44px, 5.5vw, 76px); line-height: 1; letter-spacing: -0.02em">Dónde comprar.</h1>
 <p style="margin: 0; font-size: 19px; line-height: 1.55; max-width: 640px">Encontrá nuestras mermeladas y miel en almacenes, dietéticas y tiendas naturales. Tocá un punto del mapa para ver cómo llegar.</p>
 </div>
-<div class="dc-box"><div class="dc-mapwrap"><button class="dc-cerca" id="dc-cerca" type="button">📍 Ver los más cercanos</button><div id="dc-mapa" role="region" aria-label="Mapa de puntos de venta"></div></div></div>
+<div class="dc-box"><div class="dc-mapwrap"><div class="dc-bar"><button class="dc-cerca" id="dc-cerca" type="button">📍 Ver los más cercanos</button><button class="dc-zona" type="button" data-zona="amba" aria-pressed="false">Buenos Aires</button><button class="dc-zona" type="button" data-zona="mdp" aria-pressed="false">Mar del Plata</button></div><div id="dc-mapa" role="region" aria-label="Mapa de puntos de venta"></div></div></div>
 </section>
 </main>
 
@@ -165,6 +168,8 @@ map.on('load',function(){
   };
   img.src='/img/pin-peregrina.svg';
 });
+var Z={amba:[[-58.75,-34.95],[-57.9,-34.38]],mdp:[[-57.63,-38.10],[-57.52,-37.94]]};
+document.querySelectorAll('[data-zona]').forEach(function(btn){btn.onclick=function(){document.querySelectorAll('[data-zona]').forEach(function(x){x.setAttribute('aria-pressed','false');});btn.setAttribute('aria-pressed','true');map.fitBounds(Z[btn.getAttribute('data-zona')],{padding:30});};});
 var b=document.getElementById('dc-cerca');
 b.onclick=function(){if(!navigator.geolocation){b.textContent='Tu navegador no lo permite';return;}b.textContent='Buscando…';
 navigator.geolocation.getCurrentPosition(function(pos){var me=[pos.coords.longitude,pos.coords.latitude];
