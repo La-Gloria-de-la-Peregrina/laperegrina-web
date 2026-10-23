@@ -56,6 +56,7 @@ header{position:sticky;top:env(safe-area-inset-top,0px);z-index:10;box-shadow:0 
 .dc-list span{display:block;font-size:14px;color:#7A5C70;margin-top:3px}
 #dc-mapa{height:640px;border-radius:20px;overflow:hidden;box-shadow:0 10px 30px rgba(51,3,35,.10);background:#E9E4DE}
 .leaflet-container{font-family:Raleway,sans-serif}
+.leaflet-tile-pane{filter:saturate(.45) sepia(.15) brightness(1.03)}
 .leaflet-popup-content-wrapper{border-radius:16px}
 .leaflet-popup-content{margin:16px 18px;color:#330323}
 .dc-pop b{display:block;font-family:Fraunces,serif;font-weight:600;font-size:19px;line-height:1.2}
@@ -140,7 +141,7 @@ header{position:sticky;top:env(safe-area-inset-top,0px);z-index:10;box-shadow:0 
 (function(){
 var P=(window.PUNTOS||[]).slice().sort(function(a,b){return a.n.localeCompare(b.n,'es');}),PIN='/img/pin-peregrina.svg';
 var map=L.map('dc-mapa',{scrollWheelZoom:false}).setView([-34.585,-58.45],12);
-L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png',{maxZoom:19,subdomains:'abcd',attribution:'&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions">CARTO</a>'}).addTo(map);
+L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19,attribution:'&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'}).addTo(map);
 map.on('focus',function(){map.scrollWheelZoom.enable();});
 var icon=L.icon({iconUrl:PIN,iconSize:[38,49],iconAnchor:[19,47],popupAnchor:[0,-42]});
 var grupo=L.markerClusterGroup({showCoverageOnHover:false,maxClusterRadius:40,iconCreateFunction:function(c){var n=c.getChildCount(),s=n<10?38:46;return L.divIcon({html:'<div class="dc-cluster" style="width:'+s+'px;height:'+s+'px">'+n+'</div>',className:'',iconSize:[s,s]});}});
