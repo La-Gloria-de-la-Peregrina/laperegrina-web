@@ -133,7 +133,7 @@ header nav a:last-child{margin-top:16px;text-align:center;border-bottom:0}
 <script>
 (function(){
 var P=window.PUNTOS||[];
-var map=new maplibregl.Map({container:'dc-mapa',style:'https://tiles.openfreemap.org/styles/positron',bounds:[[-58.56,-34.65],[-58.35,-34.50]],fitBoundsOptions:{padding:40},cooperativeGestures:true,attributionControl:{compact:true},locale:{'CooperativeGesturesHandler.WindowsHelpText':'Usá Ctrl + rueda para hacer zoom','CooperativeGesturesHandler.MacHelpText':'Usá ⌘ + rueda para hacer zoom','CooperativeGesturesHandler.MobileHelpText':'Usá dos dedos para mover el mapa'}});
+var map=new maplibregl.Map({container:'dc-mapa',style:'https://tiles.openfreemap.org/styles/positron',bounds:P.length?[[Math.min.apply(0,P.map(function(p){return p.lng;})),Math.min.apply(0,P.map(function(p){return p.lat;}))],[Math.max.apply(0,P.map(function(p){return p.lng;})),Math.max.apply(0,P.map(function(p){return p.lat;}))]]:[[-58.56,-34.65],[-58.35,-34.50]],fitBoundsOptions:{padding:50},cooperativeGestures:true,attributionControl:{compact:true},locale:{'CooperativeGesturesHandler.WindowsHelpText':'Usá Ctrl + rueda para hacer zoom','CooperativeGesturesHandler.MacHelpText':'Usá ⌘ + rueda para hacer zoom','CooperativeGesturesHandler.MobileHelpText':'Usá dos dedos para mover el mapa'}});
 map.addControl(new maplibregl.NavigationControl({showCompass:false}),'top-right');
 function esc(t){return String(t).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
 function km(v){return v.toFixed(1).replace('.',',')+' km';}
