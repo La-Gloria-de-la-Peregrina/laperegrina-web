@@ -38,6 +38,23 @@ header{position:sticky;top:env(safe-area-inset-top,0px);z-index:10;box-shadow:0 
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-GF5YH2N4RH"></script>
 <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag("js",new Date());gtag("config","G-GF5YH2N4RH");</script>
+<style id="menu-mobile">
+#menu-btn{display:none}
+@media (max-width:760px){
+header>div{min-height:0!important;padding-block:8px!important;gap:0!important}
+header>div>a:first-child img{height:24px!important}
+#menu-btn{display:flex;flex-direction:column;justify-content:center;gap:5px;width:48px;height:48px;padding:12px;margin-right:-12px;background:none;border:0;cursor:pointer}
+#menu-btn span{display:block;height:2.5px;border-radius:2px;background:#330323;transition:transform .2s,opacity .2s}
+header.abierto #menu-btn span:nth-child(1){transform:translateY(7.5px) rotate(45deg)}
+header.abierto #menu-btn span:nth-child(2){opacity:0}
+header.abierto #menu-btn span:nth-child(3){transform:translateY(-7.5px) rotate(-45deg)}
+header nav{display:none!important;width:100%;flex-direction:column;align-items:stretch!important;gap:0!important;font-size:18px!important;padding:6px 0 18px}
+header.abierto nav{display:flex!important}
+header nav a{padding:14px 0!important;border-bottom:1px solid rgba(51,3,35,.10)}
+header nav a[aria-current="page"]{border-bottom:1px solid rgba(51,3,35,.10);color:#B80F36}
+header nav a:last-child{margin-top:16px;text-align:center;border-bottom:0}
+}
+</style>
 <link rel="stylesheet" href="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.css">
 <style>
 .dc-box{max-width:1200px;margin:0 auto;padding:0 32px 96px}
@@ -57,7 +74,8 @@ header{position:sticky;top:env(safe-area-inset-top,0px);z-index:10;box-shadow:0 
 <header style="background: #EDE6DF">
 <div style="max-width: 1200px; margin: 0 auto; padding: 0 32px; min-height: 96px; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 24px">
 <a href="/" aria-label="La Peregrina, inicio" style="display: flex; align-items: center; min-height: 44px"><img src="/img/word-plum.svg" alt="La Peregrina" style="height: 30px; width: auto; display: block"></a>
-<nav aria-label="Principal" style="display: flex; flex-wrap: wrap; align-items: center; gap: 34px; font-size: 15px; font-weight: 600; letter-spacing: 0.04em">
+<button id="menu-btn" type="button" aria-label="Abrir menú" aria-expanded="false" aria-controls="menu-nav"><span></span><span></span><span></span></button>
+<nav id="menu-nav" aria-label="Principal" style="display: flex; flex-wrap: wrap; align-items: center; gap: 34px; font-size: 15px; font-weight: 600; letter-spacing: 0.04em">
 <a href="/mermeladas-clasica-1994/" style="text-decoration: none; padding: 12px 0">Clásica 1994</a>
 <a href="/mermeladas-70-fruta/" style="text-decoration: none; padding: 12px 0">70% fruta</a>
 <a href="/mermeladas-pouch-gastronomia/" style="text-decoration: none; padding: 12px 0">Gastronomía</a>
@@ -186,5 +204,8 @@ setInterval(function(){if(current!=='inicio'||document.hidden)return;var t=tiles
 #wa-flotante:hover{background:#178443;color:#fff}
 @media (max-width:760px){#wa-flotante{right:14px;bottom:14px;padding:13px 18px 13px 15px;font-size:15px}#wa-flotante span{font-size:0}#wa-flotante span::after{content:"WhatsApp";font-size:15px}}
 </style>
+<script>(function(){var h=document.querySelector('header'),b=document.getElementById('menu-btn');if(!h||!b)return;
+b.addEventListener('click',function(){var o=h.classList.toggle('abierto');b.setAttribute('aria-expanded',o?'true':'false');b.setAttribute('aria-label',o?'Cerrar menú':'Abrir menú');});
+h.querySelectorAll('nav a').forEach(function(a){a.addEventListener('click',function(){h.classList.remove('abierto');b.setAttribute('aria-expanded','false');});});})();</script>
 </body>
 </html>
