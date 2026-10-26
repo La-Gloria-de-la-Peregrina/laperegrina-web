@@ -3,6 +3,7 @@
  *
  * - doPost: recibe cada pedido aprobado desde el servidor de la tienda, lo agrega a la hoja "Pedidos"
  *   y manda los mails (confirmación al cliente y aviso interno).
+ * - doPost con tipo 'arrepentimiento': registra el pedido de arrepentimiento (hoja "Arrepentimientos") y manda el código por mail.
  * - doGet: el panel de envíos. Solo lo pueden abrir cuentas @laperegrina.ar.
  *
  * La dirección de la implementación pública funciona como contraseña: no la publiques.
@@ -26,6 +27,7 @@ const ENCABEZADO = ['Fecha', 'Pedido', 'Pago MP', 'Modo', 'Estado', 'Productos',
 function doPost(e) {
   const data = JSON.parse((e.postData && e.postData.contents) || '{}');
   if (CLAVE && data.clave !== CLAVE) return salida({ ok: false, error: 'clave' });
+  if (data.tipo === 'arrepentimiento') return salida(arrepentimiento(data.solicitud || {}));
   const p = data.pedido;
   const lock = LockService.getScriptLock();
   lock.waitLock(20000);                         // evita filas duplicadas si Mercado Pago avisa dos veces a la vez
@@ -56,6 +58,39 @@ function hojaPedidos() {
 }
 
 function salida(o) { return ContentService.createTextOutput(JSON.stringify(o)).setMimeType(ContentService.MimeType.JSON); }
+
+/* ---------------- Botón de arrepentimiento ---------------- */
+
+function arrepentimiento(a) {
+  if (!a.codigo || !a.email) return { ok: false, error: 'datos' };
+  const ss = HOJA_ID ? SpreadsheetApp.openById(HOJA_ID) : SpreadsheetApp.getActive();
+  let h = ss.getSheetByName('Arrepentimientos');
+  if (!h) { h = ss.insertSheet('Arrepentimientos'); h.appendRow(['Fecha', 'Código', 'Pedido', 'Nombre', 'Email', 'Teléfono', 'Motivo', 'Estado']); h.setFrozenRows(1); }
+  h.appendRow([new Date(a.fecha || Date.now()), a.codigo, a.pedido, a.nombre, a.email, a.tel, a.motivo, 'Pendiente']);
+  const nombre = esc(String(a.nombre || '').split(' ')[0]);
+  try {
+    enviar(a.email, 'Recibimos tu solicitud de arrepentimiento · ' + a.codigo,
+      'Recibimos tu solicitud de arrepentimiento. Código: ' + a.codigo + '. Te escribimos dentro de las 24 horas para coordinar el retiro de los productos y la devolución del dinero.',
+      plantilla('Código de tu solicitud: ' + a.codigo,
+        titulo('Botón de arrepentimiento', 'Recibimos tu solicitud, ' + nombre + '.') +
+        '<p style="margin:0">Registramos tu pedido de arrepentimiento de la compra. Guardá este código: es el comprobante de tu solicitud.</p>' +
+        caja('Código de la solicitud', '<b style="font-size:20px">' + esc(a.codigo) + '</b>') +
+        (a.pedido ? caja('Pedido', esc(a.pedido)) : '') +
+        '<p style="margin:22px 0 0">Te escribimos dentro de las 24 horas para coordinar el retiro de los productos. El envío de vuelta corre por nuestra cuenta y te devolvemos el dinero por el mismo medio de pago.</p>' +
+        '<p style="margin:16px 0 0;font-size:14px;color:#7A5C70">La Gloria de la Peregrina SA · CUIT 30-71498097-8</p>'));
+  } catch (err) { console.error('mail arrepentimiento', err); }
+  try {
+    enviar(AVISAR_A, 'Arrepentimiento ' + a.codigo + (a.pedido ? ' · pedido ' + a.pedido : ''),
+      'Nueva solicitud de arrepentimiento ' + a.codigo + ' de ' + a.nombre + ' (' + a.email + '). Hay que responder dentro de las 24 horas.',
+      plantilla('Nueva solicitud de arrepentimiento ' + a.codigo,
+        titulo('Botón de arrepentimiento', esc(a.codigo)) +
+        '<p style="margin:0"><b>Hay que contestarle al cliente dentro de las 24 horas</b> para coordinar el retiro y la devolución del dinero.</p>' +
+        caja('Cliente', esc(a.nombre) + '<br>' + esc(a.email) + (a.tel ? '<br>' + esc(a.tel) : '')) +
+        caja('Pedido', a.pedido ? esc(a.pedido) : 'No lo indicó') +
+        (a.motivo ? caja('Motivo', esc(a.motivo)) : '')));
+  } catch (err) { console.error('mail interno arrepentimiento', err); }
+  return { ok: true, codigo: a.codigo };
+}
 
 /* ---------------- Mails ---------------- */
 

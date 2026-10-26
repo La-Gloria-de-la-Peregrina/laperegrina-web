@@ -1,6 +1,7 @@
 // Servidor de la tienda La Peregrina.
 // - POST /api/checkout  → valida el carrito con los precios de catalogo.json y crea el pago en Mercado Pago.
 // - POST /api/webhook   → Mercado Pago avisa los pagos; se consulta el pago y, si está aprobado, se registra el pedido.
+// - POST /api/arrepentimiento → botón de arrepentimiento: genera el código y avisa a la planilla.
 // - GET  /api/salud     → para comprobar que el servidor está andando.
 // Variables de entorno (se cargan en Render, nunca en el código):
 //   MP_ACCESS_TOKEN   Access Token de Mercado Pago (de prueba o de producción)
@@ -105,6 +106,22 @@ async function registrar(pagoId) {
   }
 }
 
+async function arrepentimiento(body) {
+  const nombre = limpio(body.nombre, 80), email = limpio(body.email, 120).toLowerCase();
+  if (!nombre || !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) throw { code: 400, msg: 'Completá tu nombre y un email válido.' };
+  if (!process.env.PEDIDOS_URL) throw { code: 503, msg: 'No pudimos registrar la solicitud. Escribinos a info@laperegrina.ar.' };
+  const d = new Date(Date.now() - 3 * 3600e3);
+  const codigo = 'AR-' + d.toISOString().slice(2, 10).replace(/-/g, '') + '-' + crypto.randomBytes(3).toString('hex').toUpperCase();
+  const solicitud = { codigo, fecha: new Date().toISOString(), nombre, email, tel: limpio(body.tel, 40),
+    pedido: limpio(body.pedido, 40).toUpperCase(), motivo: limpio(body.motivo, 600) };
+  const r = await fetch(process.env.PEDIDOS_URL, { method: 'POST', headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ clave: process.env.PEDIDOS_CLAVE || '', tipo: 'arrepentimiento', solicitud }) });
+  const j = await r.json().catch(() => ({}));
+  if (!r.ok || !j.ok) throw { code: 502, msg: 'No pudimos registrar la solicitud. Probá de nuevo o escribinos a info@laperegrina.ar.' };
+  console.log('Arrepentimiento', codigo);
+  return { ok: true, codigo };
+}
+
 http.createServer(async (req, res) => {
   const origin = req.headers.origin;
   const url = new URL(req.url, 'http://x');
@@ -119,6 +136,9 @@ http.createServer(async (req, res) => {
       if (!TOKEN) return responder(res, 503, { error: 'La tienda todavía no está conectada a Mercado Pago.' }, origin);
       const body = await leer(req);
       return responder(res, 200, await checkout(body), origin);
+    }
+    if (req.method === 'POST' && url.pathname === '/api/arrepentimiento') {
+      return responder(res, 200, await arrepentimiento(await leer(req)), origin);
     }
     if (req.method === 'POST' && url.pathname === '/api/webhook') {
       const body = await leer(req).catch(() => ({}));
