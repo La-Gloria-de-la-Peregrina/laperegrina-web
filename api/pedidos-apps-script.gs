@@ -4,14 +4,14 @@
  * Recibe cada pedido aprobado desde el servidor de la tienda, lo agrega a la hoja "Pedidos"
  * y manda dos mails: uno a La Peregrina y la confirmación al cliente.
  *
- * Antes de implementarlo, completá las dos constantes de abajo.
+ * La dirección de implementación de este script funciona como contraseña: no la publiques.
  */
-const CLAVE = 'PONÉ-ACÁ-LA-MISMA-CLAVE-QUE-EN-RENDER';   // PEDIDOS_CLAVE
+const CLAVE = '';   // opcional: si la completás, poné la misma en Render (PEDIDOS_CLAVE)
 const AVISAR_A = 'info@laperegrina.ar';                   // a quién le llegan los pedidos
 
 function doPost(e) {
   const data = JSON.parse(e.postData.contents || '{}');
-  if (data.clave !== CLAVE) return salida({ ok: false, error: 'clave' });
+  if (CLAVE && data.clave !== CLAVE) return salida({ ok: false, error: 'clave' });
   const p = data.pedido;
   const hoja = SpreadsheetApp.getActive().getSheetByName('Pedidos') || crearHoja();
   // evita duplicados si llega dos veces el mismo pago
