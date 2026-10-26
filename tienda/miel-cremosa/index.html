@@ -55,7 +55,7 @@ header nav a[aria-current="page"]{border-bottom:1px solid rgba(51,3,35,.10);colo
 header nav a:last-child{margin-top:16px;text-align:center;border-bottom:0}
 }
 </style>
-<link rel="stylesheet" href="/tienda/tienda.css?v=1">
+<link rel="stylesheet" href="/tienda/tienda.css?v=2">
 </head>
 <body>
 <div id="sitio">
@@ -86,11 +86,11 @@ header nav a:last-child{margin-top:16px;text-align:center;border-bottom:0}
 <div class="t-precio t-precio-xl">$7.700</div>
 <p class="t-desc">La misma miel, en textura untable.</p>
 <ul class="t-chips"><li>Sin conservantes</li><li>Sin colorantes</li><li>Libre de gluten</li></ul>
-<div class="t-comprar"><div class="t-cant" aria-label="Cantidad"><button type="button" data-menos aria-label="Restar uno">−</button><input id="t-cant" type="number" inputmode="numeric" min="1" max="24" value="1" aria-label="Cantidad"><button type="button" data-mas aria-label="Sumar uno">+</button></div><button type="button" class="t-btn" data-agregar="miel-cremosa" data-con-cant>Agregar al carrito</button></div>
+<div class="t-comprar"><div class="t-cant" aria-label="Cantidad"><button type="button" data-menos aria-label="Restar uno">−</button><input id="t-cant" type="number" inputmode="numeric" min="1" max="24" value="1" aria-label="Cantidad"><button type="button" data-mas aria-label="Sumar uno">+</button></div><button type="button" class="t-btn" data-agregar="miel-cremosa" data-con-cant>Sumar a mi caja</button></div>
 <dl class="t-datos"><dt>Ingredientes</dt><dd>Miel pura.</dd><dt>Presentación</dt><dd>Frasco de vidrio de 390 g.</dd><dt>Conservación</dt><dd>Conservar en lugar fresco y seco.</dd><dt>Envío</dt><dd>A todo el país con Andreani, a domicilio o a sucursal.</dd></dl>
 </div></div>
 <h2 class="t-h2">También de Miel</h2>
-<div class="t-grid t-grid-4"><article class="t-card" data-linea="miel"><a href="/tienda/miel/" class="t-card-img"><img src="/img/tienda/miel-1-s.jpg?v=3" alt="Frasco de mermelada Miel de La Peregrina" loading="lazy" width="480" height="600"></a><div class="t-card-body"><div class="t-linea t-l-miel">Miel</div><h3><a href="/tienda/miel/">Miel</a></h3><div class="t-card-foot"><b class="t-precio">$7.700</b><button type="button" class="t-btn t-btn-sm" data-agregar="miel">Agregar</button></div></div></article></div>
+<div class="c2-grid"><article class="c2-card" data-prod="miel"><div class="c2-foto"><a href="/tienda/miel/"><img src="/img/tienda/miel-1-s.jpg?v=3" alt="Frasco de Miel de La Peregrina" loading="lazy" width="480" height="600"></a><button type="button" class="c2-mas" data-agregar="miel" data-silencio aria-label="Sumar Miel a la caja"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg><span class="c2-n" hidden></span></button></div><div class="c2-txt"><h3><span class="c2-dot" style="background:#FFDB84" aria-hidden="true"></span><a href="/tienda/miel/">Miel</a></h3><span class="c2-precio">$7.700</span></div></article></div>
 </section>
 </main>
 <footer style="background: #22011A; color: #D9CFC8">
@@ -134,11 +134,11 @@ setInterval(function(){if(current!=='inicio'||document.hidden)return;var t=tiles
 b.addEventListener('click',function(){var o=h.classList.toggle('abierto');b.setAttribute('aria-expanded',o?'true':'false');b.setAttribute('aria-label',o?'Cerrar menú':'Abrir menú');});
 h.querySelectorAll('nav a').forEach(function(a){a.addEventListener('click',function(){h.classList.remove('abierto');b.setAttribute('aria-expanded','false');});});})();</script>
 <div id="carro" class="t-drawer" hidden><div class="t-drawer-bg" data-cerrar></div><aside class="t-drawer-panel" role="dialog" aria-modal="true" aria-labelledby="carro-tit">
-<div class="t-drawer-head"><h2 id="carro-tit">Tu carrito</h2><button type="button" class="t-x" data-cerrar aria-label="Cerrar">×</button></div>
+<div class="t-drawer-head"><h2 id="carro-tit">Tu caja</h2><button type="button" class="t-x" data-cerrar aria-label="Cerrar">×</button></div>
 <div id="carro-items" class="t-drawer-items"></div>
-<div class="t-drawer-foot"><div class="t-row"><span>Subtotal</span><b id="carro-sub">$0</b></div><p class="t-mini">El envío se calcula en el siguiente paso.</p><a href="/tienda/carrito/" class="t-btn t-btn-full" id="carro-seguir">Finalizar compra</a></div>
+<div class="t-drawer-foot"><div class="t-row"><span>Subtotal</span><b id="carro-sub">$0</b></div><p class="t-mini" id="carro-min">Compra mínima: 6 frascos.</p><a href="/tienda/carrito/" class="t-btn t-btn-full" id="carro-seguir">Finalizar compra</a></div>
 </aside></div>
-<script src="/tienda/productos.js?v=1"></script>
-<script src="/tienda/tienda.js?v=1"></script>
+<script src="/tienda/productos.js?v=2"></script>
+<script src="/tienda/tienda.js?v=2"></script>
 </body>
 </html>

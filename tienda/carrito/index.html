@@ -55,7 +55,7 @@ header nav a[aria-current="page"]{border-bottom:1px solid rgba(51,3,35,.10);colo
 header nav a:last-child{margin-top:16px;text-align:center;border-bottom:0}
 }
 </style>
-<link rel="stylesheet" href="/tienda/tienda.css?v=1">
+<link rel="stylesheet" href="/tienda/tienda.css?v=2">
 </head>
 <body>
 <div id="sitio">
@@ -149,11 +149,11 @@ setInterval(function(){if(current!=='inicio'||document.hidden)return;var t=tiles
 b.addEventListener('click',function(){var o=h.classList.toggle('abierto');b.setAttribute('aria-expanded',o?'true':'false');b.setAttribute('aria-label',o?'Cerrar menú':'Abrir menú');});
 h.querySelectorAll('nav a').forEach(function(a){a.addEventListener('click',function(){h.classList.remove('abierto');b.setAttribute('aria-expanded','false');});});})();</script>
 <div id="carro" class="t-drawer" hidden><div class="t-drawer-bg" data-cerrar></div><aside class="t-drawer-panel" role="dialog" aria-modal="true" aria-labelledby="carro-tit">
-<div class="t-drawer-head"><h2 id="carro-tit">Tu carrito</h2><button type="button" class="t-x" data-cerrar aria-label="Cerrar">×</button></div>
+<div class="t-drawer-head"><h2 id="carro-tit">Tu caja</h2><button type="button" class="t-x" data-cerrar aria-label="Cerrar">×</button></div>
 <div id="carro-items" class="t-drawer-items"></div>
-<div class="t-drawer-foot"><div class="t-row"><span>Subtotal</span><b id="carro-sub">$0</b></div><p class="t-mini">El envío se calcula en el siguiente paso.</p><a href="/tienda/carrito/" class="t-btn t-btn-full" id="carro-seguir">Finalizar compra</a></div>
+<div class="t-drawer-foot"><div class="t-row"><span>Subtotal</span><b id="carro-sub">$0</b></div><p class="t-mini" id="carro-min">Compra mínima: 6 frascos.</p><a href="/tienda/carrito/" class="t-btn t-btn-full" id="carro-seguir">Finalizar compra</a></div>
 </aside></div>
-<script src="/tienda/productos.js?v=1"></script>
-<script src="/tienda/tienda.js?v=1"></script>
+<script src="/tienda/productos.js?v=2"></script>
+<script src="/tienda/tienda.js?v=2"></script>
 </body>
 </html>

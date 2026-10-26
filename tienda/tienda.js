@@ -1,5 +1,5 @@
 (function(){
-var P=window.PRODUCTOS||{},KEY='lp_carrito';
+var P=window.PRODUCTOS||{},KEY='lp_carrito',MIN=6;
 function load(){try{return JSON.parse(localStorage.getItem(KEY))||{};}catch(e){return window.__c||{};}}
 function save(c){window.__c=c;try{localStorage.setItem(KEY,JSON.stringify(c));}catch(e){}}
 var C=load();Object.keys(C).forEach(function(k){if(!P[k])delete C[k];});
@@ -12,13 +12,25 @@ function itemHTML(k){var p=P[k];return '<div class="t-item"><a href="'+p.u+'"><i
 var n=document.getElementById('carro-n'),dr=document.getElementById('carro'),its=document.getElementById('carro-items');
 function pinta(){var q=cant();if(n){n.textContent=q;n.hidden=!q;}
 if(its){its.innerHTML=q?Object.keys(C).map(itemHTML).join(''):'<p class="t-mini" style="padding:24px 0">Todavía no agregaste productos.</p>';document.getElementById('carro-sub').textContent=fmt(sub());document.getElementById('carro-seguir').style.display=q?'':'none';}
-chk();}
+caja(q);chk();}
+function caja(q){
+document.querySelectorAll('.c2-card').forEach(function(c){var k=c.getAttribute('data-prod'),n=C[k]||0,b=c.querySelector('.c2-n');c.classList.toggle('en-caja',n>0);if(b){b.textContent=n;b.hidden=!n;}});
+var tit=document.getElementById('caja-tit');if(tit){var falta=Math.max(0,MIN-q);
+tit.textContent=q>=MIN?'Tu caja · '+q+' frascos':'Tu caja · '+q+' de '+MIN;
+document.getElementById('caja-sub').textContent=q>=MIN?'¡Lista! Podés seguir sumando o ir a pagar. Subtotal '+fmt(sub())+'.':(q?'Compra mínima: 6 frascos. Te '+(falta===1?'falta 1':'faltan '+falta)+'.':'Compra mínima: 6 frascos. Mezclá los sabores que quieras.');
+var sl=[];Object.keys(C).forEach(function(k){for(var i=0;i<C[k];i++)sl.push(P[k].img);});
+var h='';for(var i=0;i<Math.max(MIN,Math.min(sl.length,MIN));i++){h+=sl[i]?'<div class="c2-slot lleno"><img src="'+sl[i]+'" alt=""></div>':'<div class="c2-slot"></div>';}
+if(sl.length>MIN)h+='<span class="c2-slot-mas">+'+(sl.length-MIN)+'</span>';
+document.getElementById('caja-slots').innerHTML=h;
+var bt=document.getElementById('caja-btn');bt.setAttribute('aria-disabled',q>=MIN?'false':'true');bt.textContent=q>=MIN?'Ir a pagar':'Completá tu caja';}
+var cm=document.getElementById('carro-min'),cs=document.getElementById('carro-seguir');
+if(cm){cm.textContent=q>=MIN?'El envío se calcula en el siguiente paso.':'Compra mínima: 6 frascos. Te '+(MIN-q===1?'falta 1':'faltan '+(MIN-q))+'.';cs.setAttribute('aria-disabled',q>=MIN?'false':'true');cs.style.opacity=q>=MIN?'':'.45';cs.style.pointerEvents=q>=MIN?'':'none';}}
 function abrir(){if(!dr)return;dr.hidden=false;document.body.style.overflow='hidden';var x=dr.querySelector('.t-x');x&&x.focus();}
 function cerrar(){if(!dr)return;dr.hidden=true;document.body.style.overflow='';}
 document.addEventListener('click',function(e){var t=e.target.closest('[data-agregar],[data-q],[data-quitar],[data-cerrar],#carro-btn,[data-filtro],.t-thumb,[data-menos],[data-mas]');if(!t)return;
 if(t.id==='carro-btn'){abrir();return;}
 if(t.hasAttribute('data-cerrar')){cerrar();return;}
-if(t.hasAttribute('data-agregar')){var k=t.getAttribute('data-agregar'),q=1;if(t.hasAttribute('data-con-cant')){q=Math.max(1,parseInt(document.getElementById('t-cant').value,10)||1);}setQ(k,(C[k]||0)+q);var tx=t.textContent;t.classList.add('t-ok');t.textContent='✓ Agregado';setTimeout(function(){t.classList.remove('t-ok');t.textContent=tx;},1300);abrir();return;}
+if(t.hasAttribute('data-agregar')){var k=t.getAttribute('data-agregar'),q=1;if(t.hasAttribute('data-con-cant')){q=Math.max(1,parseInt(document.getElementById('t-cant').value,10)||1);}setQ(k,(C[k]||0)+q);if(t.hasAttribute('data-silencio'))return;var tx=t.textContent;t.classList.add('t-ok');t.textContent='✓ Sumado';setTimeout(function(){t.classList.remove('t-ok');t.textContent=tx;},1300);abrir();return;}
 if(t.hasAttribute('data-q')){var k2=t.getAttribute('data-q');setQ(k2,(C[k2]||0)+parseInt(t.getAttribute('data-d'),10));return;}
 if(t.hasAttribute('data-quitar')){setQ(t.getAttribute('data-quitar'),0);return;}
 if(t.hasAttribute('data-menos')||t.hasAttribute('data-mas')){var i=document.getElementById('t-cant');i.value=Math.max(1,Math.min(24,(parseInt(i.value,10)||1)+(t.hasAttribute('data-mas')?1:-1)));return;}
@@ -30,7 +42,7 @@ document.addEventListener('keydown',function(e){if(e.key==='Escape')cerrar();});
 var ENV=null;
 function zona(cp){cp=parseInt(cp,10);if(!cp||cp<1000||cp>9999)return null;if(cp>=7600&&cp<=7609)return{domicilio:4500,sucursal:3600};if(cp<2000)return{domicilio:7400,sucursal:5900};return{domicilio:9800,sucursal:7600};}
 function chk(){var box=document.getElementById('chk-items');if(!box)return;var q=cant();
-box.innerHTML=Object.keys(C).map(itemHTML).join('');document.getElementById('chk-vacio').hidden=!!q;
+box.innerHTML=Object.keys(C).map(itemHTML).join('')+(q&&q<MIN?'<p class="t-min">Compra mínima: 6 frascos. Te '+(MIN-q===1?'falta 1':'faltan '+(MIN-q))+'. <a href="/tienda/">Sumar sabores</a></p>':'');document.getElementById('chk-vacio').hidden=!!q;
 var m=(document.querySelector('input[name=envio]:checked')||{}).value||'domicilio';
 document.querySelectorAll('[data-dom]').forEach(function(l){l.style.display=m==='domicilio'?'':'none';});
 var e=m==='retiro'?0:(ENV?ENV[m]:null);
@@ -41,7 +53,7 @@ var cot=document.getElementById('chk-cotizar');
 if(cot){cot.onclick=function(){var cp=document.getElementById('chk-cp').value.trim(),z=zona(cp),msg=document.getElementById('chk-cp-msg');
 if(!z){msg.textContent='Ingresá un código postal de 4 números.';ENV=null;}else{ENV=z;msg.textContent='Costo estimado para CP '+cp+'. Vista previa: el costo real lo va a calcular Andreani.';}chk();};
 document.getElementById('chk-pagar').onclick=function(){var msg=document.getElementById('chk-msg'),f=document.getElementById('chk-form'),m=(document.querySelector('input[name=envio]:checked')||{}).value,ok=true;
-if(!cant()){msg.textContent='Agregá al menos un producto.';return;}
+if(cant()<MIN){msg.textContent='La compra mínima es de 6 frascos. Te '+(MIN-cant()===1?'falta 1':'faltan '+(MIN-cant()))+'.';return;}
 if(m!=='retiro'&&!ENV){msg.textContent='Calculá el envío con tu código postal.';return;}
 [].forEach.call(f.querySelectorAll('input'),function(i){var need=i.required||(m==='domicilio'&&(i.name==='direccion'||i.name==='localidad'));var bad=need&&!i.value.trim()||(i.type==='email'&&i.value&&!/^\S+@\S+\.\S+$/.test(i.value));i.setAttribute('aria-invalid',bad?'true':'false');if(bad)ok=false;});
 if(!ok){msg.textContent='Revisá los datos marcados en rojo.';return;}

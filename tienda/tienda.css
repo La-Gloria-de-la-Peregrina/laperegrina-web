@@ -89,3 +89,48 @@
 .t-mp{background:#009EE3}.t-mp:hover{background:#0087C2}
 @media (max-width:860px){.t-wrap{padding:0 16px}.t-ficha-grid,.t-chk-grid{grid-template-columns:1fr;gap:28px}.t-info,.t-resumen{position:static}.t-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.t-card-body{padding:12px 12px 14px}.t-card h3{font-size:19px}.t-precio{font-size:19px}.t-card-foot{flex-direction:column;align-items:stretch;gap:8px}.t-campos{grid-template-columns:1fr}.t-box{padding:20px}.t-hero .t-wrap{padding-top:40px}}
 @media (max-width:760px){header>div>a:first-child{margin-right:auto}#carro-btn{order:2}#menu-btn{order:3}header nav{order:4}}
+/* ===== Diseño C2 · Armá tu caja ===== */
+.c2-hero{background:#330323;color:#EDE6DF}
+.c2-hero-in{padding-top:88px;padding-bottom:88px;display:flex;flex-wrap:wrap;align-items:center;gap:56px}
+.c2-hero-txt{flex:1 1 460px;display:flex;flex-direction:column;gap:22px}
+.c2-hero-txt h1{margin:0;font-family:Fraunces,serif;font-weight:500;font-size:clamp(46px,6vw,84px);line-height:1;letter-spacing:-.02em}
+.c2-hero-txt p{margin:0;font-size:20px;line-height:1.55;max-width:500px}
+.c2-chips li{background:#CC2752;border:0;color:#fff}
+.c2-hero-fotos{flex:1 1 420px;display:flex;gap:20px;align-items:flex-end;justify-content:center}
+.c2-hero-fotos img{width:46%;height:auto;aspect-ratio:2/3;object-fit:cover;border-radius:999px 999px 24px 24px;display:block}
+.c2-hero-fotos img:last-child{margin-bottom:60px}
+.c2-caja-wrap{background:#EDE6DF;position:sticky;top:96px;z-index:5;padding:20px 0 0}
+.c2-caja{background:#330323;color:#EDE6DF;border-radius:28px;padding:20px 28px;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:18px 24px;box-shadow:0 12px 30px rgba(34,1,26,.25)}
+.c2-caja-tit{font-family:Fraunces,serif;font-weight:600;font-size:26px}
+.c2-caja-sub{font-size:15px;margin-top:4px}
+.c2-slots{display:flex;gap:10px;flex-wrap:wrap}
+.c2-slot{width:52px;height:65px;border-radius:26px 26px 9px 9px;border:2px dashed rgba(237,230,223,.45);box-sizing:border-box;overflow:hidden;position:relative}
+.c2-slot img{width:100%;height:100%;object-fit:cover;display:block}
+.c2-slot.lleno{border:0}
+.c2-slot-mas{font-weight:800;font-size:15px;align-self:center;color:#FFDB84}
+.c2-caja-btn{white-space:nowrap;text-decoration:none;font-weight:800;border-radius:999px;padding:14px 24px;background:#FFDB84;color:#330323!important}
+.c2-caja-btn[aria-disabled="true"]{background:rgba(237,230,223,.18);color:#EDE6DF!important;pointer-events:none}
+.c2-lista{background:#F6F1EC}.c2-lista .t-wrap{padding-top:64px;padding-bottom:104px;display:flex;flex-direction:column;gap:72px}
+.c2-fila{display:flex;flex-direction:column;gap:30px}
+.c2-fila-head{display:flex;flex-wrap:wrap;align-items:baseline;gap:10px 24px;border-bottom:1.5px solid rgba(51,3,35,.18);padding-bottom:16px}
+.c2-fila-head h2{margin:0;font-family:Fraunces,serif;font-weight:500;font-size:40px;line-height:1}
+.c2-fila-head span{font-size:16px;line-height:1.5;color:#7A5C70}
+.c2-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:40px 28px}
+.c2-card{display:flex;flex-direction:column;align-items:center;gap:14px;text-align:center}
+.c2-foto{position:relative;width:100%}
+.c2-foto img{width:100%;height:auto;aspect-ratio:4/5;object-fit:cover;border-radius:999px 999px 26px 26px;display:block;transition:transform .25s}
+.c2-card:hover .c2-foto img{transform:translateY(-4px)}
+.c2-card.en-caja .c2-foto img{outline:4px solid #B80F36;outline-offset:4px}
+.c2-mas{position:absolute;right:14px;bottom:14px;width:52px;height:52px;border-radius:50%;border:0;background:#fff;color:#330323;display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 6px 16px rgba(34,1,26,.25);transition:transform .15s}
+.c2-mas:active{transform:scale(.92)}
+.c2-card.en-caja .c2-mas{background:#B80F36;color:#fff;border:3px solid #fff}
+.c2-n{position:absolute;top:-8px;right:-8px;min-width:24px;height:24px;border-radius:12px;background:#330323;color:#fff;font-size:13px;font-weight:800;display:flex;align-items:center;justify-content:center;padding:0 6px;box-sizing:border-box}
+.c2-n[hidden]{display:none}
+.c2-txt{display:flex;flex-direction:column;align-items:center;gap:4px}
+.c2-txt h3{margin:0;display:flex;align-items:center;gap:8px;font-family:Fraunces,serif;font-weight:500;font-size:26px;line-height:1.1}
+.c2-txt h3 a{text-decoration:none}
+.c2-dot{width:12px;height:12px;border-radius:50%;display:block;flex:none}
+.c2-precio{font-size:16px;font-weight:700;color:#7A5C70}
+.t-ficha .c2-grid{margin-top:0}
+.t-min{background:#FFF4D6;border-radius:12px;padding:10px 14px;font-size:14px;font-weight:700;color:#330323}
+@media (max-width:860px){.c2-hero-in{padding-top:48px;padding-bottom:56px;gap:36px}.c2-caja-wrap{top:64px;padding-top:12px}.c2-caja{padding:12px 14px 12px 18px;border-radius:20px;gap:10px;flex-wrap:nowrap}.c2-caja-tit{font-size:20px}.c2-caja-sub{font-size:13px}.c2-slots{display:none}.c2-caja-btn{padding:11px 16px;font-size:14px}.c2-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:28px 14px}.c2-txt h3{font-size:19px}.c2-mas{width:44px;height:44px;right:8px;bottom:8px}.c2-fila-head h2{font-size:30px}.c2-lista .t-wrap{gap:56px;padding-top:40px}}
