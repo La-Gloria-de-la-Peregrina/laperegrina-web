@@ -66,7 +66,7 @@ function wa(t){var n=String(t||'').replace(/\D/g,'');if(!n)return '';if(n.indexO
 function card(p){
   var env=p.estado==='Enviado',c=p.cliente||{};
   var items=(p.items||[]).map(function(i){return '<li>'+(i.id?'<img src="'+SITIO+'/img/tienda/'+encodeURIComponent(i.id)+'-1-s.jpg" alt="">':'')+'<b>'+i.cantidad+'×</b><span>'+esc(i.producto)+'</span></li>';}).join('');
-  var dir=p.envio==='retiro'?'':'<div class="dir">'+esc([c.direccion,c.localidad,c.cp?'CP '+c.cp:''].filter(String).join(', '))+'</div>';
+  var dir=p.envio==='retiro'?'':'<div class="dir">'+esc([c.direccion,c.localidad,c.cp?'CP '+c.cp:''].filter(Boolean).join(', '))+'</div>';
   var acc=env
     ?'<div class="hecho">Enviado '+(p.enviado?fecha(p.enviado):'')+(p.seguimiento?'<br>Seguimiento: '+esc(p.seguimiento):'')+'</div><button type="button" class="btn sec" data-des="'+p.fila+'">Volver a "por enviar"</button>'
     :(p.envio==='retiro'?'':'<label for="s'+p.fila+'">N.º de seguimiento Andreani (opcional)</label><input type="text" id="s'+p.fila+'" autocomplete="off">')+

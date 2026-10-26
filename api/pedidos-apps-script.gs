@@ -13,6 +13,7 @@ const AVISAR_A = 'info@laperegrina.ar';        // a quién le llegan los avisos 
 const DOMINIO = 'laperegrina.ar';              // quién puede abrir el panel
 const PANEL_URL = '';                          // dirección del panel (se completa después de implementarlo)
 const SITIO = 'https://laperegrina.ar';
+const HOJA_ID = '';                            // id de la planilla si el script no está dentro de ella
 
 const COL = { fecha: 1, pedido: 2, pago: 3, modo: 4, estado: 5, productos: 6, frascos: 7, total: 8, envio: 9,
   costo: 10, nombre: 11, email: 12, tel: 13, dni: 14, direccion: 15, localidad: 16, cp: 17, seguimiento: 18,
@@ -26,6 +27,9 @@ function doPost(e) {
   const data = JSON.parse((e.postData && e.postData.contents) || '{}');
   if (CLAVE && data.clave !== CLAVE) return salida({ ok: false, error: 'clave' });
   const p = data.pedido;
+  const lock = LockService.getScriptLock();
+  lock.waitLock(20000);                         // evita filas duplicadas si Mercado Pago avisa dos veces a la vez
+  try {
   const hoja = hojaPedidos();
   const ids = hoja.getLastRow() > 1 ? hoja.getRange(2, COL.pago, hoja.getLastRow() - 1, 1).getValues().flat().map(String) : [];
   if (ids.indexOf(String(p.pago_id)) === -1) {
@@ -37,11 +41,12 @@ function doPost(e) {
     try { mailCliente(p); } catch (err) { console.error('mail cliente', err); }
     try { mailInterno(p); } catch (err) { console.error('mail interno', err); }
   }
+  } finally { lock.releaseLock(); }
   return salida({ ok: true });
 }
 
 function hojaPedidos() {
-  const ss = SpreadsheetApp.getActive();
+  const ss = HOJA_ID ? SpreadsheetApp.openById(HOJA_ID) : SpreadsheetApp.getActive();
   let h = ss.getSheetByName('Pedidos');
   if (!h) { h = ss.insertSheet('Pedidos'); h.appendRow(ENCABEZADO); h.setFrozenRows(1); return h; }
   // completa columnas nuevas si la hoja es de una versión anterior
