@@ -135,3 +135,8 @@
 .t-ficha .c2-grid{margin-top:0}
 .t-min{background:#FFF4D6;border-radius:12px;padding:10px 14px;font-size:14px;font-weight:700;color:#330323}
 @media (max-width:860px){.c2-hero-in{padding-top:48px;padding-bottom:56px;gap:36px}.c2-caja-wrap{top:64px;padding-top:12px}.c2-caja{padding:12px 14px 12px 18px;border-radius:20px;gap:10px;flex-wrap:nowrap}.c2-caja-tit{font-size:20px}.c2-caja-sub{font-size:13px}.c2-slots{display:none}.c2-caja-btn{padding:11px 16px;font-size:14px}.c2-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:28px 14px}.c2-txt h3{font-size:19px}.c2-mas{width:44px;height:44px;right:8px;bottom:8px}.c2-fila-head h2{font-size:30px}.c2-lista>.t-wrap{gap:56px;padding-top:32px}}
+.t-gracias{max-width:640px;margin:0 auto 20px;display:none;flex-direction:column;gap:16px}
+.t-gracias p{margin:0;font-size:18px;line-height:1.6}.t-gracias .t-btn{align-self:flex-start}
+#gracias[data-estado="ok"] [data-si="ok"],#gracias[data-estado="pendiente"] [data-si="pendiente"],#gracias[data-estado="error"] [data-si="error"]{display:flex}
+#gracias:not([data-estado="ok"]):not([data-estado="pendiente"]):not([data-estado="error"]) [data-si="pendiente"]{display:flex}
+.t-btn:disabled{opacity:.6;cursor:wait}

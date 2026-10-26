@@ -1,0 +1,9 @@
+{
+  "name": "laperegrina-api",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Servidor de la tienda de La Peregrina: crea pagos de Mercado Pago y registra pedidos.",
+  "main": "server.js",
+  "scripts": { "start": "node server.js" },
+  "engines": { "node": ">=20" }
+}

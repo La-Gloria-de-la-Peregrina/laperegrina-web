@@ -57,6 +57,13 @@ if(cant()<MIN){msg.textContent='La compra mínima es de 6 frascos. Te '+(MIN-can
 if(m!=='retiro'&&!ENV){msg.textContent='Calculá el envío con tu código postal.';return;}
 [].forEach.call(f.querySelectorAll('input'),function(i){var need=i.required||(m==='domicilio'&&(i.name==='direccion'||i.name==='localidad'));var bad=need&&!i.value.trim()||(i.type==='email'&&i.value&&!/^\S+@\S+\.\S+$/.test(i.value));i.setAttribute('aria-invalid',bad?'true':'false');if(bad)ok=false;});
 if(!ok){msg.textContent='Revisá los datos marcados en rojo.';return;}
-msg.textContent='Vista previa: acá te llevaría a Mercado Pago para pagar. Todavía no está conectado, no se cobra nada.';};}
+var API=window.TIENDA_API;if(!API){msg.textContent='Vista previa: acá te llevaría a Mercado Pago para pagar. Todavía no está conectado, no se cobra nada.';return;}
+var btn=this,dat={};[].forEach.call(f.querySelectorAll('input'),function(i){dat[i.name]=i.value.trim();});
+btn.disabled=true;msg.textContent='Conectando con Mercado Pago…';
+fetch(API.replace(/\/$/,'')+'/api/checkout',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({items:C,envio:m,cp:document.getElementById('chk-cp').value.trim(),cliente:dat})})
+.then(function(r){return r.json().then(function(j){if(!r.ok||!j.url)throw new Error(j.error||'Error');return j;});})
+.then(function(j){try{sessionStorage.setItem('lp_pedido',j.pedido);}catch(e){}location.href=j.url;})
+.catch(function(e){btn.disabled=false;msg.textContent=e.message&&e.message!=='Failed to fetch'?e.message:'No pudimos conectar con Mercado Pago. Probá de nuevo en un minuto.';});};}
+var gr=document.getElementById('gracias');if(gr){var est=new URLSearchParams(location.search).get('estado');gr.setAttribute('data-estado',est||'');if(est==='ok'){C={};save(C);}}
 pinta();
 })();

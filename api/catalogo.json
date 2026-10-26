@@ -1,0 +1,73 @@
+{
+ "_nota": "Precios en pesos con IVA. Tienen que coincidir con tienda/productos.js.",
+ "minimo": 6,
+ "productos": {
+  "frutilla-clasica": {
+   "nombre": "Frutilla · Clásica 1994",
+   "precio": 7200
+  },
+  "durazno-clasica": {
+   "nombre": "Durazno · Clásica 1994",
+   "precio": 7200
+  },
+  "del-bosque-clasica": {
+   "nombre": "Del bosque · Clásica 1994",
+   "precio": 7700
+  },
+  "higo-clasica": {
+   "nombre": "Higo · Clásica 1994",
+   "precio": 7200
+  },
+  "kiwi-clasica": {
+   "nombre": "Kiwi · Clásica 1994",
+   "precio": 7200
+  },
+  "tomate-clasica": {
+   "nombre": "Tomate · Clásica 1994",
+   "precio": 7200
+  },
+  "miel": {
+   "nombre": "Miel",
+   "precio": 7700
+  },
+  "miel-cremosa": {
+   "nombre": "Miel cremosa",
+   "precio": 7700
+  },
+  "frutilla-70": {
+   "nombre": "Frutilla 70%",
+   "precio": 8400
+  },
+  "durazno-70": {
+   "nombre": "Durazno 70%",
+   "precio": 8400
+  },
+  "del-bosque-70": {
+   "nombre": "Del bosque 70%",
+   "precio": 8400
+  },
+  "higo-70": {
+   "nombre": "Higo 70%",
+   "precio": 8400
+  },
+  "naranja-70": {
+   "nombre": "Naranja 70%",
+   "precio": 8400
+  }
+ },
+ "envio": {
+  "retiro": 0,
+  "mdp": {
+   "domicilio": 4500,
+   "sucursal": 3600
+  },
+  "amba": {
+   "domicilio": 7400,
+   "sucursal": 5900
+  },
+  "resto": {
+   "domicilio": 9800,
+   "sucursal": 7600
+  }
+ }
+}
