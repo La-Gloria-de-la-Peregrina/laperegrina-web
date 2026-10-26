@@ -121,7 +121,7 @@
 .c2-foto{position:relative;width:100%}
 .c2-foto img{width:100%;height:auto;aspect-ratio:4/5;object-fit:cover;border-radius:999px 999px 26px 26px;display:block;transition:transform .25s}
 .c2-card:hover .c2-foto img{transform:translateY(-4px)}
-.c2-card.en-caja .c2-foto img{outline:4px solid #B80F36;outline-offset:4px}
+
 .c2-mas{position:absolute;right:14px;bottom:14px;width:52px;height:52px;border-radius:50%;border:0;background:#fff;color:#330323;display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 6px 16px rgba(34,1,26,.25);transition:transform .15s}
 .c2-mas:active{transform:scale(.92)}
 .c2-card.en-caja .c2-mas{background:#B80F36;color:#fff;border:3px solid #fff}
