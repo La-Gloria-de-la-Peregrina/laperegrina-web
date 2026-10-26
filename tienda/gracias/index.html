@@ -55,7 +55,7 @@ header nav a[aria-current="page"]{border-bottom:1px solid rgba(51,3,35,.10);colo
 header nav a:last-child{margin-top:16px;text-align:center;border-bottom:0}
 }
 </style>
-<link rel="stylesheet" href="/tienda/tienda.css?v=5">
+<link rel="stylesheet" href="/tienda/tienda.css?v=8">
 </head>
 <body>
 <div id="sitio">
@@ -77,7 +77,14 @@ header nav a:last-child{margin-top:16px;text-align:center;border-bottom:0}
 <main data-page="tienda">
 <div class="t-aviso">Vista previa · precios provisorios · todavía no se puede comprar</div>
 <section class="t-wrap t-checkout" id="gracias">
-<div class="t-box t-gracias" data-si="ok"><h1 class="t-h1">¡Gracias por tu compra!</h1><p>Tu pago fue aprobado. Te mandamos un mail con el detalle del pedido y te avisamos cuando lo despachemos.</p><a class="t-btn" href="/tienda/">Volver a la tienda</a></div>
+<div class="t-gracias g-ok" data-si="ok">
+<div class="g-frutas" id="g-frutas" aria-hidden="true"></div>
+<div class="g-fila" id="g-fila" aria-hidden="true"></div>
+<div class="g-txt"><div class="t-kick" style="color:#FFDB84">Pedido confirmado</div>
+<h1 id="g-tit" aria-label="¡Gracias!">¡Gracias!</h1>
+<p id="g-pedido">Tu pago fue aprobado. Te mandamos un mail con el detalle y te avisamos cuando despachemos tu caja.</p>
+<a class="t-btn g-btn" href="/tienda/">Volver a la tienda</a></div>
+</div>
 <div class="t-box t-gracias" data-si="pendiente"><h1 class="t-h1">Tu pago está en proceso.</h1><p>Mercado Pago todavía no lo confirmó. Apenas se acredite te llega un mail con el pedido.</p><a class="t-btn" href="/tienda/">Volver a la tienda</a></div>
 <div class="t-box t-gracias" data-si="error"><h1 class="t-h1">El pago no se pudo completar.</h1><p>No se cobró nada. Tu caja sigue guardada: podés intentar de nuevo con otro medio de pago.</p><a class="t-btn" href="/tienda/carrito/">Volver a intentar</a></div>
 </section>
@@ -129,6 +136,6 @@ h.querySelectorAll('nav a').forEach(function(a){a.addEventListener('click',funct
 </aside></div>
 <script src="/tienda/config.js?v=2"></script>
 <script src="/tienda/productos.js?v=2"></script>
-<script src="/tienda/tienda.js?v=3"></script>
+<script src="/tienda/tienda.js?v=6"></script>
 </body>
 </html>

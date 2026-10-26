@@ -64,6 +64,16 @@ fetch(API.replace(/\/$/,'')+'/api/checkout',{method:'POST',headers:{'Content-Typ
 .then(function(r){return r.json().then(function(j){if(!r.ok||!j.url)throw new Error(j.error||'Error');return j;});})
 .then(function(j){try{sessionStorage.setItem('lp_pedido',j.pedido);}catch(e){}location.href=j.url;})
 .catch(function(e){btn.disabled=false;msg.textContent=e.message&&e.message!=='Failed to fetch'?e.message:'No pudimos conectar con Mercado Pago. Probá de nuevo en un minuto.';});};}
-var gr=document.getElementById('gracias');if(gr){var est=new URLSearchParams(location.search).get('estado');gr.setAttribute('data-estado',est||'');if(est==='ok'){C={};save(C);}}
+var gr=document.getElementById('gracias');if(gr){var est=new URLSearchParams(location.search).get('estado');gr.setAttribute('data-estado',est||'');if(est==='ok'){var imgs=[];Object.keys(C).forEach(function(k){for(var i=0;i<C[k];i++)imgs.push(P[k].img);});
+if(!imgs.length){try{imgs=JSON.parse(sessionStorage.getItem('lp_caja')||'[]');}catch(e){}}
+if(!imgs.length)imgs=Object.keys(P).slice(0,6).map(function(k){return P[k].img;});
+try{sessionStorage.setItem('lp_caja',JSON.stringify(imgs.slice(0,6)));}catch(e){}
+var fl=document.getElementById('g-fila'),h='';imgs.slice(0,6).forEach(function(src,i){h+='<div class="g-fr" style="--d:'+(0.1+i*0.13).toFixed(2)+'s"><img src="'+src+'" alt=""></div>';});fl.innerHTML=h;
+var tt=document.getElementById('g-tit'),w='¡Gracias!',th='';for(var q=0;q<w.length;q++)th+='<span class="g-l" aria-hidden="true" style="--d:'+(0.9+q*0.09).toFixed(2)+'s">'+w[q]+'</span>';tt.innerHTML=th;
+var cols=['#CC2752','#FFDB84','#F5A04C','#4F64B4','#AEDC68','#F56BA5'],orn=['o00','o01','o02','o03','o04','o05','o06','o07','o08','o09','o10','o11','o12'],fh='';
+for(var j=0;j<16;j++){var sz=26+Math.round(Math.random()*26);var lado=j%2?(78+Math.random()*18):(2+Math.random()*18);fh+='<span class="g-fruta" style="left:'+lado.toFixed(1)+'%;--s:'+sz+'px;--c:'+cols[j%cols.length]+';--m:url(/img/orn/'+orn[j%orn.length]+'.svg);--d:'+(1.4+Math.random()*7).toFixed(2)+'s;--t:'+(8+Math.random()*5).toFixed(2)+'s;--x:'+Math.round(Math.random()*120-60)+'px;--g:'+Math.round(Math.random()*120-60)+'deg"></span>';}
+document.getElementById('g-frutas').innerHTML=fh;
+var pd='';try{pd=sessionStorage.getItem('lp_pedido')||'';}catch(e){}if(pd)document.getElementById('g-pedido').textContent='Tu pago fue aprobado. Pedido '+pd+'. Te mandamos un mail con el detalle y te avisamos cuando despachemos tu caja.';
+C={};save(C);}}
 pinta();
 })();
