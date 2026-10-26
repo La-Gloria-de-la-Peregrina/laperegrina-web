@@ -33,7 +33,7 @@ function doPost(e) {
     hoja.appendRow([new Date(p.fecha || Date.now()), p.pedido, String(p.pago_id), p.modo, 'Por enviar',
       p.items.map(i => i.cantidad + ' × ' + i.producto).join('\n'), p.items.reduce((a, i) => a + i.cantidad, 0),
       p.total, p.envio, p.costo_envio, c.nombre, c.email, c.tel, c.dni,
-      [c.direccion, c.depto].filter(String).join(' '), c.localidad, c.cp, '', '', JSON.stringify(p.items)]);
+      [c.direccion, c.depto].filter(Boolean).join(' '), c.localidad, c.cp, '', '', JSON.stringify(p.items)]);
     try { mailCliente(p); } catch (err) { console.error('mail cliente', err); }
     try { mailInterno(p); } catch (err) { console.error('mail interno', err); }
   }
@@ -54,7 +54,7 @@ function salida(o) { return ContentService.createTextOutput(JSON.stringify(o)).s
 
 /* ---------------- Mails ---------------- */
 
-function enviar(para, asunto, html, texto) {
+function enviar(para, asunto, texto, html) {
   const opts = { htmlBody: html, name: 'La Peregrina', replyTo: REMITENTE };
   if (GmailApp.getAliases().indexOf(REMITENTE) !== -1) opts.from = REMITENTE;
   GmailApp.sendEmail(para, asunto, texto, opts);
@@ -67,7 +67,7 @@ function textoEnvio(p) {
   const c = p.cliente || {};
   if (p.envio === 'retiro') return 'Retiro en Mar del Plata. Te escribimos por WhatsApp para coordinar día y lugar.';
   return 'Andreani a ' + (p.envio === 'sucursal' ? 'sucursal' : 'domicilio') + ' · ' +
-    [c.direccion, c.depto, c.localidad, c.cp ? 'CP ' + c.cp : ''].filter(String).join(', ');
+    [c.direccion, c.depto, c.localidad, c.cp ? 'CP ' + c.cp : ''].filter(Boolean).join(', ');
 }
 
 /** Plantilla común: encabezado ciruela con logo, cuerpo crema, pie con datos. */
@@ -167,7 +167,7 @@ function doGet() {
 function filaAPedido(f, i) {
   let items = [];
   try { items = JSON.parse(f[COL.items - 1] || '[]'); } catch (e) {}
-  if (!items.length) items = String(f[COL.productos - 1] || '').split('\n').filter(String).map(l => { const m = l.split(' × '); return { cantidad: Number(m[0]) || 1, producto: m[1] || l, precio: 0 }; });
+  if (!items.length) items = String(f[COL.productos - 1] || '').split('\n').filter(Boolean).map(l => { const m = l.split(' × '); return { cantidad: Number(m[0]) || 1, producto: m[1] || l, precio: 0 }; });
   return { fila: i + 2, fecha: f[0] instanceof Date ? f[0].toISOString() : String(f[0]), pedido: f[1], modo: f[3], estado: f[4] || 'Por enviar',
     items: items, frascos: f[6], total: f[7], envio: f[8], costo_envio: f[9],
     cliente: { nombre: f[10], email: f[11], tel: String(f[12]), dni: String(f[13]), direccion: f[14], localidad: f[15], cp: String(f[16]) },
