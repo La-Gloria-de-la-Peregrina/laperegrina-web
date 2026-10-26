@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="es">
+<head>
+<base target="_top">
+<meta charset="utf-8">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Raleway:wght@500;600;700;800&display=swap">
+<style>
+:root{--ciruela:#330323;--crema:#EDE6DF;--papel:#F6F1EC;--fucsia:#B80F36;--miel:#FFDB84;--gris:#7A5C70;--verde:#1E7A45;--linea:rgba(51,3,35,.12)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--crema);color:var(--ciruela);font-family:Raleway,Helvetica,Arial,sans-serif;font-size:15px}
+header{background:var(--ciruela);color:var(--crema);padding:20px max(16px,4vw)}
+header .in{max-width:1100px;margin:0 auto;display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:12px}
+header h1{margin:0;font-family:Fraunces,Georgia,serif;font-weight:500;font-size:32px;line-height:1}
+header small{display:block;font-size:12px;font-weight:800;letter-spacing:.2em;text-transform:uppercase;color:var(--miel);margin-bottom:8px}
+.tabs{display:flex;gap:8px}
+.tabs button{font:inherit;font-weight:800;font-size:14px;border:2px solid var(--crema);background:transparent;color:var(--crema);border-radius:999px;padding:9px 16px;cursor:pointer}
+.tabs button[aria-pressed="true"]{background:var(--miel);border-color:var(--miel);color:var(--ciruela)}
+.tabs .n{display:inline-block;min-width:20px;margin-left:6px;padding:1px 6px;border-radius:10px;background:rgba(0,0,0,.18);font-size:12px}
+main{max-width:1100px;margin:0 auto;padding:24px max(16px,4vw) 60px;display:flex;flex-direction:column;gap:14px}
+.estado{color:var(--gris);font-weight:600;padding:30px 0;text-align:center}
+.card{background:#fff;border-radius:18px;padding:18px 20px;display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr) auto;gap:18px 24px;align-items:start;box-shadow:0 6px 18px rgba(51,3,35,.06)}
+.card.enviado{opacity:.75}
+.top{display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px;margin-bottom:10px}
+.id{font-family:Fraunces,Georgia,serif;font-weight:600;font-size:21px}
+.chip{font-size:11px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;border-radius:999px;padding:5px 10px}
+.chip.envio{background:var(--papel)}
+.chip.prueba{background:var(--miel)}
+.chip.ok{background:#DDF1E4;color:var(--verde)}
+.fecha{color:var(--gris);font-size:13px}
+.items{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:6px}
+.items li{display:flex;align-items:center;gap:10px}
+.items img{width:34px;height:42px;object-fit:cover;border-radius:17px 17px 6px 6px;flex:none;background:var(--papel)}
+.items b{font-size:16px;min-width:26px}
+.tot{margin-top:10px;font-weight:700}
+.cli{display:flex;flex-direction:column;gap:4px;line-height:1.45}
+.cli .nom{font-weight:800;font-size:16px}
+.cli a{color:var(--fucsia);font-weight:700}
+.dir{margin-top:6px;background:var(--papel);border-radius:10px;padding:8px 10px}
+.acc{display:flex;flex-direction:column;gap:8px;min-width:200px}
+.acc label{font-size:12px;font-weight:800;letter-spacing:.06em;color:var(--gris)}
+.acc input[type=text]{font:inherit;padding:10px 12px;border:1.5px solid #B9A6B1;border-radius:10px;color:var(--ciruela);width:100%}
+.acc .chk{display:flex;align-items:center;gap:8px;font-size:13px;font-weight:600;letter-spacing:0;color:var(--ciruela)}
+.btn{font:inherit;font-weight:800;font-size:15px;border:0;border-radius:999px;padding:13px 18px;background:var(--fucsia);color:#fff;cursor:pointer}
+.btn:disabled{opacity:.5;cursor:wait}
+.btn.sec{background:transparent;color:var(--ciruela);border:1.5px solid var(--ciruela);padding:9px 14px;font-size:13px}
+.hecho{font-weight:700;color:var(--verde);line-height:1.5}
+button:focus-visible,input:focus-visible,a:focus-visible{outline:3px solid #4F64B4;outline-offset:2px}
+@media (max-width:820px){.card{grid-template-columns:minmax(0,1fr)}.acc{min-width:0}}
+</style>
+</head>
+<body>
+<header><div class="in">
+<div><small>La Peregrina · Tienda</small><h1>Panel de envíos</h1></div>
+<div class="tabs" role="group" aria-label="Filtrar pedidos">
+<button type="button" id="t-pend" aria-pressed="true">Por enviar<span class="n" id="n-pend">0</span></button>
+<button type="button" id="t-env" aria-pressed="false">Enviados<span class="n" id="n-env">0</span></button>
+</div></div></header>
+<main id="lista"><p class="estado">Cargando pedidos…</p></main>
+<script>
+var PED=[],VISTA='pend',SITIO='https://laperegrina.ar';
+function esc(t){return String(t==null?'':t).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
+function pesos(n){return '$'+Math.round(Number(n)||0).toString().replace(/\B(?=(\d{3})+(?!\d))/g,'.');}
+function fecha(s){var d=new Date(s);if(isNaN(d))return esc(s);return d.toLocaleDateString('es-AR',{day:'2-digit',month:'short'})+' · '+d.toLocaleTimeString('es-AR',{hour:'2-digit',minute:'2-digit'});}
+function envioTxt(p){return p.envio==='retiro'?'Retira en Mar del Plata':(p.envio==='sucursal'?'Andreani a sucursal':'Andreani a domicilio');}
+function wa(t){var n=String(t||'').replace(/\D/g,'');if(!n)return '';if(n.indexOf('54')!==0)n='549'+n.replace(/^0/,'');return 'https://wa.me/'+n;}
+function card(p){
+  var env=p.estado==='Enviado',c=p.cliente||{};
+  var items=(p.items||[]).map(function(i){return '<li>'+(i.id?'<img src="'+SITIO+'/img/tienda/'+encodeURIComponent(i.id)+'-1-s.jpg" alt="">':'')+'<b>'+i.cantidad+'×</b><span>'+esc(i.producto)+'</span></li>';}).join('');
+  var dir=p.envio==='retiro'?'':'<div class="dir">'+esc([c.direccion,c.localidad,c.cp?'CP '+c.cp:''].filter(String).join(', '))+'</div>';
+  var acc=env
+    ?'<div class="hecho">Enviado '+(p.enviado?fecha(p.enviado):'')+(p.seguimiento?'<br>Seguimiento: '+esc(p.seguimiento):'')+'</div><button type="button" class="btn sec" data-des="'+p.fila+'">Volver a "por enviar"</button>'
+    :(p.envio==='retiro'?'':'<label for="s'+p.fila+'">N.º de seguimiento Andreani (opcional)</label><input type="text" id="s'+p.fila+'" autocomplete="off">')+
+     '<label class="chk"><input type="checkbox" id="a'+p.fila+'" checked> Avisarle al cliente por mail</label>'+
+     '<button type="button" class="btn" data-env="'+p.fila+'">'+(p.envio==='retiro'?'Marcar como entregado':'Marcar como enviado')+'</button>';
+  return '<article class="card'+(env?' enviado':'')+'"><div><div class="top"><span class="id">'+esc(p.pedido)+'</span><span class="chip envio">'+envioTxt(p)+'</span>'+(p.modo==='prueba'?'<span class="chip prueba">Prueba</span>':'')+(env?'<span class="chip ok">Enviado</span>':'')+'<span class="fecha">'+fecha(p.fecha)+'</span></div><ul class="items">'+items+'</ul><div class="tot">'+(p.frascos||'')+' frascos · '+pesos(p.total)+'</div></div>'+
+    '<div class="cli"><span class="nom">'+esc(c.nombre)+'</span>'+(c.tel?'<span>'+esc(c.tel)+(wa(c.tel)?' · <a href="'+wa(c.tel)+'" target="_blank" rel="noopener">WhatsApp</a>':'')+'</span>':'')+'<span>'+esc(c.email)+'</span>'+(c.dni?'<span>DNI '+esc(c.dni)+'</span>':'')+dir+'</div>'+
+    '<div class="acc">'+acc+'</div></article>';
+}
+function pinta(){
+  var pend=PED.filter(function(p){return p.estado!=='Enviado';}),env=PED.filter(function(p){return p.estado==='Enviado';});
+  document.getElementById('n-pend').textContent=pend.length;document.getElementById('n-env').textContent=env.length;
+  var l=VISTA==='pend'?pend:env;
+  document.getElementById('lista').innerHTML=l.length?l.map(card).join(''):'<p class="estado">'+(VISTA==='pend'?'No hay pedidos por enviar. ¡Todo al día!':'Todavía no hay pedidos enviados.')+'</p>';
+}
+function cargar(){google.script.run.withSuccessHandler(function(r){PED=r||[];pinta();}).withFailureHandler(function(e){document.getElementById('lista').innerHTML='<p class="estado">No se pudieron cargar los pedidos: '+esc(e.message)+'</p>';}).listarPedidos();}
+document.getElementById('t-pend').onclick=function(){VISTA='pend';this.setAttribute('aria-pressed','true');document.getElementById('t-env').setAttribute('aria-pressed','false');pinta();};
+document.getElementById('t-env').onclick=function(){VISTA='env';this.setAttribute('aria-pressed','true');document.getElementById('t-pend').setAttribute('aria-pressed','false');pinta();};
+document.addEventListener('click',function(e){
+  var b=e.target.closest('[data-env],[data-des]');if(!b)return;b.disabled=true;
+  if(b.hasAttribute('data-env')){var f=Number(b.getAttribute('data-env')),s=document.getElementById('s'+f),a=document.getElementById('a'+f);b.textContent='Guardando…';
+    google.script.run.withSuccessHandler(cargar).withFailureHandler(function(err){b.disabled=false;b.textContent='Reintentar';alert(err.message);}).marcarEnviado(f,s?s.value.trim():'',a?a.checked:false);}
+  else{google.script.run.withSuccessHandler(cargar).deshacerEnviado(Number(b.getAttribute('data-des')));}
+});
+cargar();setInterval(cargar,120000);
+</script>
+</body>
+</html>

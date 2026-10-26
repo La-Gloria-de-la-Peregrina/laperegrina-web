@@ -94,7 +94,7 @@ async function registrar(pagoId) {
   procesados.add(pagoId);
   const md = pago.metadata || {};
   let cliente = {}; try { cliente = JSON.parse(md.cliente || '{}'); } catch (e) {}
-  const items = ((pago.additional_info || {}).items || []).map(i => ({ producto: i.title, cantidad: Number(i.quantity), precio: Number(i.unit_price) }));
+  const items = ((pago.additional_info || {}).items || []).map(i => ({ id: i.id, producto: i.title, cantidad: Number(i.quantity), precio: Number(i.unit_price) }));
   const pedido = { pedido: pago.external_reference, pago_id: String(pago.id), fecha: pago.date_approved, total: pago.transaction_amount,
     envio: md.envio, costo_envio: (pago.shipping_amount || 0), items, cliente, modo: pago.live_mode ? 'real' : 'prueba' };
   console.log('Pedido aprobado', pedido.pedido, pedido.total);
