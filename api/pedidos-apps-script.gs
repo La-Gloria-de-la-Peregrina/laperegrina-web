@@ -105,7 +105,7 @@ function esc(t) { return String(t == null ? '' : t).replace(/[&<>"]/g, c => ({ '
 
 function textoEnvio(p) {
   const c = p.cliente || {};
-  if (p.envio === 'retiro') return 'Retiro en Mar del Plata. Te escribimos por WhatsApp para coordinar día y lugar.';
+  if (p.envio === 'retiro') return 'Retiro en Mar del Plata. Te escribimos para coordinar día y lugar.';
   return 'Andreani a ' + (p.envio === 'sucursal' ? 'sucursal' : 'domicilio') + ' · ' +
     [c.direccion, c.depto, c.localidad, c.cp ? 'CP ' + c.cp : ''].filter(Boolean).join(', ');
 }
@@ -161,7 +161,7 @@ function mailCliente(p) {
     titulo('Pedido ' + p.pedido, '¡Gracias por tu compra, ' + esc((c.nombre || '').split(' ')[0]) + '!') +
     '<p style="margin:0">Recibimos tu pago y ya estamos armando tu caja. Te avisamos por mail cuando la despachemos.</p>' +
     tablaItems(p) + caja('Entrega', esc(textoEnvio(p))) +
-    '<p style="margin:22px 0 0;font-size:14px;color:#7A5C70">¿Tenés alguna duda? Respondé este mail o escribinos por WhatsApp al +54 9 223 696-5902.</p>' +
+    '<p style="margin:22px 0 0;font-size:14px;color:#7A5C70">¿Tenés alguna duda? Respondé este mail o escribinos a ' + REMITENTE + '.</p>' +
     boton(SITIO + '/tienda/', 'Volver a la tienda'));
   enviar(c.email, prueba + '¡Gracias por tu compra! Pedido ' + p.pedido, 'Recibimos tu pedido ' + p.pedido + '. Total: ' + pesos(p.total) + '. ' + textoEnvio(p), html);
 }
@@ -184,7 +184,7 @@ function mailEnviado(p, seguimiento) {
   const retiro = p.envio === 'retiro';
   const html = plantilla(retiro ? 'Tu caja ya está lista para retirar.' : 'Tu caja ya está en camino.',
     titulo('Pedido ' + p.pedido, retiro ? '¡Tu caja está lista!' : '¡Tu caja está en camino!') +
-    '<p style="margin:0">' + (retiro ? 'Ya podés pasar a retirarla. Te escribimos por WhatsApp para coordinar.' : 'Despachamos tu pedido con Andreani.') + '</p>' +
+    '<p style="margin:0">' + (retiro ? 'Ya podés pasar a retirarla. Te escribimos para coordinar día y lugar.' : 'Despachamos tu pedido con Andreani.') + '</p>' +
     (seguimiento ? caja('Número de seguimiento', '<b style="font-size:18px">' + esc(seguimiento) + '</b><br><a href="https://www.andreani.com" style="color:#B80F36">Seguilo en andreani.com</a>') : '') +
     tablaItems(p) + caja('Entrega', esc(textoEnvio(p))));
   enviar(c.email, prueba + (retiro ? 'Tu caja está lista para retirar · ' : 'Tu caja está en camino · ') + p.pedido,

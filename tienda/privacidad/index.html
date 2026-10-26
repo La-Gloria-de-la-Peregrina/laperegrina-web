@@ -82,11 +82,11 @@ header nav a:last-child{margin-top:16px;text-align:center;border-bottom:0}
 
 <p class="t-legal-lead">Te contamos qué datos pedimos cuando comprás en la tienda, para qué los usamos y qué derechos tenés, según la Ley 25.326 de Protección de los Datos Personales.</p>
 <h2>1. Responsable de los datos</h2>
-<dl class="t-legal-id"><dt>Razón social</dt><dd>La Gloria de la Peregrina SA</dd><dt>CUIT</dt><dd>30-71498097-8</dd><dt>Domicilio</dt><dd>Paraje La Gloria de la Peregrina, Partido de General Pueyrredón, Provincia de Buenos Aires</dd><dt>Contacto</dt><dd><a href="mailto:info@laperegrina.ar">info@laperegrina.ar</a> · WhatsApp +54 9 223 696-5902</dd></dl>
+<dl class="t-legal-id"><dt>Razón social</dt><dd>La Gloria de la Peregrina SA</dd><dt>CUIT</dt><dd>30-71498097-8</dd><dt>Domicilio</dt><dd>Paraje La Gloria de la Peregrina, Partido de General Pueyrredón, Provincia de Buenos Aires</dd><dt>Contacto</dt><dd><a href="mailto:info@laperegrina.ar">info@laperegrina.ar</a></dd></dl>
 <h2>2. Qué datos pedimos</h2>
 <p>Para hacer un pedido te pedimos nombre y apellido, email, teléfono, DNI y, si elegís envío, la dirección de entrega. Los datos de pago los carga cada uno directamente en Mercado Pago: nosotros no vemos ni guardamos datos de tarjetas.</p>
 <h2>3. Para qué los usamos</h2>
-<ul><li>Procesar tu pedido y el pago.</li><li>Preparar y despachar el envío.</li><li>Emitir la factura.</li><li>Avisarte por mail o WhatsApp sobre el estado de tu pedido y responder tus consultas.</li></ul>
+<ul><li>Procesar tu pedido y el pago.</li><li>Preparar y despachar el envío.</li><li>Emitir la factura.</li><li>Avisarte por mail sobre el estado de tu pedido y responder tus consultas.</li></ul>
 <p>No te mandamos publicidad sin tu consentimiento y no vendemos ni alquilamos tus datos.</p>
 <h2>4. Con quién los compartimos</h2>
 <p>Solo con quienes necesitamos para completar tu compra: Mercado Pago (pago), Andreani (envío) y Google (donde guardamos los pedidos y desde donde salen los mails). Cada uno los trata según sus propias políticas de privacidad. También podemos tener que informarlos a autoridades cuando la ley lo exija.</p>
@@ -120,7 +120,7 @@ if(!form.nombre.value.trim()||!form.contacto.value.trim()){say('Completá tu nom
 btn.disabled=true;say('Enviando…');
 fetch('https://script.google.com/macros/s/AKfycbzo6ld2wXtZf6H6Ex2drS_G362LpLj_oD19Lw6UvHPFQSGRJJ3MyboesNWGXTsc8Jub/exec',{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:new URLSearchParams(new FormData(form)).toString()})
 .then(function(){form.reset();if(window.gtag){gtag('event','generate_lead',{formulario:'contacto',pagina:location.pathname});}say('¡Gracias! Recibimos tus datos y te escribimos a la brevedad.');})
-.catch(function(){say('No pudimos enviar el formulario. Escribinos a info@laperegrina.ar o por WhatsApp al +54 9 223 696-5902.');})
+.catch(function(){say('No pudimos enviar el formulario. Escribinos a info@laperegrina.ar.');})
 .then(function(){btn.disabled=false;});});}
 var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;if(reduce)return;
 var tiles=[].slice.call(document.querySelectorAll('[data-tile]')),cards=[].slice.call(document.querySelectorAll('[data-card]'));
@@ -133,12 +133,6 @@ el.querySelector('[data-line]').textContent=on?'Clásica 1994':'Selección Espec
 setInterval(function(){if(current!=='inicio'||document.hidden)return;var t=tiles[order[step%4]],c=cards[cardOrder[step%5]];if(t)flip(t,false);if(c)flip(c,true);step++;},1800);
 })();
 </script>
-<a id="wa-flotante" href="https://wa.me/5492236965902?text=Hola%2C%20vi%20la%20web%20de%20La%20Peregrina%20y%20quiero%20recibir%20la%20lista%20de%20productos." target="_blank" rel="noopener" aria-label="Escribinos por WhatsApp" onclick="if(window.gtag){gtag('event','click_whatsapp',{pagina:location.pathname});}"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 11.5a8.4 8.4 0 0 1-12.3 7.4L3 20.5l1.7-5.4A8.4 8.4 0 1 1 21 11.5z"/></svg><span>Escribinos por WhatsApp</span></a>
-<style>
-#wa-flotante{position:fixed;right:22px;bottom:22px;z-index:50;display:flex;align-items:center;gap:10px;background:#1E9E50;color:#fff;text-decoration:none;font-family:Raleway,sans-serif;font-weight:700;font-size:16px;padding:14px 22px 14px 18px;border-radius:999px;box-shadow:0 8px 24px rgba(34,1,26,.28)}
-#wa-flotante:hover{background:#178443;color:#fff}
-@media (max-width:760px){#wa-flotante{right:14px;bottom:14px;padding:13px 18px 13px 15px;font-size:15px}#wa-flotante span{font-size:0}#wa-flotante span::after{content:"WhatsApp";font-size:15px}}
-</style>
 <script>(function(){var h=document.querySelector('header'),b=document.getElementById('menu-btn');if(!h||!b)return;
 b.addEventListener('click',function(){var o=h.classList.toggle('abierto');b.setAttribute('aria-expanded',o?'true':'false');b.setAttribute('aria-label',o?'Cerrar menú':'Abrir menú');});
 h.querySelectorAll('nav a').forEach(function(a){a.addEventListener('click',function(){h.classList.remove('abierto');b.setAttribute('aria-expanded','false');});});})();</script>
