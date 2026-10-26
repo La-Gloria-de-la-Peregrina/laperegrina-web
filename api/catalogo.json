@@ -4,55 +4,55 @@
  "productos": {
   "frutilla-clasica": {
    "nombre": "Frutilla · Clásica 1994",
-   "precio": 7200
+   "precio": 1
   },
   "durazno-clasica": {
    "nombre": "Durazno · Clásica 1994",
-   "precio": 7200
+   "precio": 1
   },
   "del-bosque-clasica": {
    "nombre": "Del bosque · Clásica 1994",
-   "precio": 7700
+   "precio": 1
   },
   "higo-clasica": {
    "nombre": "Higo · Clásica 1994",
-   "precio": 7200
+   "precio": 1
   },
   "kiwi-clasica": {
    "nombre": "Kiwi · Clásica 1994",
-   "precio": 7200
+   "precio": 1
   },
   "tomate-clasica": {
    "nombre": "Tomate · Clásica 1994",
-   "precio": 7200
+   "precio": 1
   },
   "miel": {
    "nombre": "Miel",
-   "precio": 7700
+   "precio": 1
   },
   "miel-cremosa": {
    "nombre": "Miel cremosa",
-   "precio": 7700
+   "precio": 1
   },
   "frutilla-70": {
    "nombre": "Frutilla 70%",
-   "precio": 8400
+   "precio": 1
   },
   "durazno-70": {
    "nombre": "Durazno 70%",
-   "precio": 8400
+   "precio": 1
   },
   "del-bosque-70": {
    "nombre": "Del bosque 70%",
-   "precio": 8400
+   "precio": 1
   },
   "higo-70": {
    "nombre": "Higo 70%",
-   "precio": 8400
+   "precio": 1
   },
   "naranja-70": {
    "nombre": "Naranja 70%",
-   "precio": 8400
+   "precio": 1
   }
  },
  "envio": {
